@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>streamplus — Admin</title>
+		<script data-cfasync="false" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+		<link data-cfasync="false" rel="shortcut icon" href="../img/Logo.svg" type="image/x-icon" />
+		<link data-cfasync="false" rel="stylesheet" href="css/index.css" />
+		<script data-cfasync="false" type="importmap">
+			{
+				"imports": {
+					"socket.io-client": "https://cdn.socket.io/4.4.1/socket.io.esm.min.js"
+				}
+			}
+		</script>
+		<script data-cfasync="false" src="js/index.js" type="module"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="bar-container">
+				<span id="bar-current-time">00:00:00</span>
+				<input id="bar" type="range" value="0" disabled />
+				<span id="bar-video-duration">00:00:00</span>
+			</div>
+			<div id="bar-controls">
+				<button disabled>Forward +10</button>
+				<button disabled>Rewind -10</button>
+				<span>+100s</span>
+			</div>
+			<hr />
+			<div id="controls">
+				<button id="play">Play</button>
+				<button id="pause">Pause</button>
+				<button id="skip">Skip</button>
+			</div>
+			<hr />
+			<div id="media">
+				Optional values: <br />
+				Title: <input type="text" id="media-title" /> (optional)<br />
+				Description: <input type="text" id="media-description" /> (optional)<br />
+				URL: <input type="text" id="media-url" /> (optional)<br />
+				Thumbnail: <input type="text" id="media-thumbnail" /> (optional)<br />
+				<button id="raw-data">Paste Raw Data</button><br />
+				<hr style="width: 240px; float: left" />
+				<br />
+				Source List:
+				<div id="source-list">
+					<div class="source">
+						Name: <input class="name" type="text" value="default" /> Source: <input class="source" type="text" />
+						<input type="radio" class="default" name="source-default" checked /> Default
+					</div>
+				</div>
+				<br />
+				Embed <input type="checkbox" id="media-embed" /><br />
+				<button id="new-source-button">Add New Source</button> <br />
+				<hr style="width: 240px; float: left" />
+				<br />
+				<button id="play-now-button">Play now</button>
+				<button id="add-button">Add to Queue</button>
+			</div>
+			<hr />
+			<div id="channel">
+				Channel: <input type="text" id="channel-username" /> <br />
+				Latency: <input type="number" id="channel-latency" /><br />
+				Auto Latency Mode: <input type="checkbox" id="channel-latency-mode" /><br />
+				Sync: <input type="checkbox" id="channel-sync" /><br />
+				Autoplay: <input type="checkbox" id="channel-autoplay" /><br />
+				Media Request: <input type="checkbox" id="channel-request" /><br />
+				Platform:
+				<select id="channel-platform">
+					<option value="twitch">Twitch</option>
+					<option value="kick">Kick</option>
+				</select>
+				<br />
+				<button>Update state</button>
+				<br /><br />
+				It is recommended to disable auto latency and set latency to 0 when playing short videos in queue.
+			</div>
+			<div id="invite" style="display: none">
+				<hr />
+				<select id="invite-role">
+					<option value="1">Moderator</option>
+					<option value="2">Admin</option>
+				</select>
+				<button id="invite-button">Generate Invite Link</button>
+			</div>
+			<hr />
+			Viewers: <span id="viewers-count">?</span> <button id="refresh-viewers">Refresh Viewers</button>
+			<ul id="viewers-list"></ul>
+		</div>
+	</body>
+</html>

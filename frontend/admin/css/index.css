@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap');
+
+body,
+html {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #232323;
+    display: flex;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+#container {
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    padding: 8px;
+    font-family: 'Mulish', sans-serif;
+    color: white;
+}
+
+#bar-container {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+}
+
+#bar-container input {
+    flex-grow: 1;
+}

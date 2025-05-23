@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>streamplus</title>
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
+		<script data-cfasync="false" src="https://player.twitch.tv/js/embed/v1.js"></script>
+		<script data-cfasync="false" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+		<script data-cfasync="false" src="https://www.youtube.com/iframe_api"></script>
+		<script data-cfasync="false" type="importmap">
+			{
+				"imports": {
+					"socket.io-client": "https://cdn.socket.io/4.4.1/socket.io.esm.min.js"
+				}
+			}
+		</script>
+		<script data-cfasync="false" src="js/index.js" type="module"></script>
+	</head>
+	<body>
+		<div class="page">
+			<div class="settings">
+				<div class="settings__modal">
+					<div class="settings__title">Settings</div>
+					<div class="settings__list">
+						<div class="settings__item">
+							<div class="settings__label">Camera Visible</div>
+							<div class="settings__value">
+								<input type="checkbox" id="settings-camera-visible" />
+							</div>
+						</div>
+						<div class="settings__item">
+							<div class="settings__label">Chat Visible</div>
+							<div class="settings__value">
+								<input type="checkbox" id="settings-chat-visible" />
+							</div>
+						</div>
+						<div class="settings__item">
+							<div class="settings__label">Ignore Channel Latency</div>
+							<div class="settings__value">
+								<input type="checkbox" id="settings-ignore-latency" />
+							</div>
+							<div class="settings__description">
+								Enabling this option will cause, that channel's latency will be ignored. This should be used only by
+								admins.
+							</div>
+						</div>
+						<div class="settings__item">
+							<div class="settings__label">Video Timer</div>
+							<div class="settings__value">
+								<button id="settings-timer-button">Show</button>
+							</div>
+							<div class="settings__description">It shows external video timer, which you can use in OBS.</div>
+						</div>
+					</div>
+					<button class="settings__close">Close</button>
+				</div>
+				<div class="settings__background"></div>
+			</div>
+			<div class="player">
+				<div class="unmute">
+					<img src="img/player/unmute.png" alt="Unmute" />
+					Click anywhere to unmute
+				</div>
+				<video class="player__video player--active"></video>
+				<iframe
+					src="https://www.youtube.com/embed/-Pg819il8lY?enablejsapi=1&controls=0&mute=1"
+					id="player__youtube"
+					class="player__youtube player--active"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen></iframe>
+				<iframe class="player__embed player--active" scrolling="no" frameborder="0"></iframe>
+				<div class="camera" id="camera">
+					<div class="camera__drag">
+						<img draggable="false" width="24" src="./img/player/drag.svg" alt="" />
+					</div>
+					<div class="camera__resize">
+						<img draggable="false" width="18" src="./img/player/resize-xy.svg" alt="" />
+					</div>
+					<iframe frameborder="0" id="camera__source"></iframe>
+				</div>
+				<div class="controls">
+					<div class="controls__bar">
+						<div class="controls__bar--progress"></div>
+					</div>
+					<div class="controls__items">
+						<div class="controls__items controls__items--left">
+							<div id="play-button" class="controls__icon">
+								<img draggable="false" src="img/controls/pause.svg" alt="Play/Pause" />
+							</div>
+							<div class="controls__items volume">
+								<div id="volume-button" class="controls__icon">
+									<img draggable="false" src="img/controls/volume-mute.svg" alt="Volume" />
+								</div>
+								<div class="volume__range">
+									<input type="range" value="10" min="0" max="100" />
+								</div>
+							</div>
+							<span id="controls__time">00:00 / 1:00</span>
+						</div>
+						<div class="controls__items controls__items--right">
+							<div class="controls__source">
+								Source:
+								<select>
+									<option value="default">default</option>
+								</select>
+							</div>
+							<div id="source-button" class="controls__icon">
+								<img draggable="false" src="img/controls/settings.svg" alt="Settings" />
+							</div>
+							<div id="fullscreen-button" class="controls__icon">
+								<img draggable="false" src="img/controls/fullscreen.svg" alt="Fullscreen" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="content">
+				<div class="navigation">
+					<div class="queue">
+						<div class="queue queue__status">
+							<img src="./img/queue/locked.svg" alt="Queue Locked" />
+							<div class="queue__title">Queue</div>
+						</div>
+						<div class="queue queue__info">
+							<div class="queue__item">
+								<img src="./img/queue/time.svg" alt="Queue Time" />
+								<span id="queue__duration">00:00:00</span>
+							</div>
+							<div class="queue__item">
+								<span id="queue__size" class="queue__item--title">0</span>
+								<span>items</span>
+							</div>
+						</div>
+					</div>
+					<div class="menu">
+						<button disabled id="request-video-button" style="display: none">
+							<img src="./img/menu/request-video.svg" alt="Request Video" />
+							Request Video
+						</button>
+						<button id="settings-button">
+							<img src="./img/menu/settings.svg" alt="Settings" />
+							Settings
+						</button>
+						<a href="/account/login" id="login-button">
+							<button class="button--login">
+								<img src="./img/menu/discord.svg" alt="Settings" />
+								<span>Log in</span>
+							</button>
+						</a>
+					</div>
+				</div>
+				<div class="media">
+					<div class="media__item media--current">
+						<div class="media__position">
+							<img src="./img/media/live.svg" alt="Currently Playing" />
+						</div>
+						<div class="media__info">
+							<a class="media__link" href="#" target="_blank">
+								<div class="media__image">
+									<span id="media__curent--duration" class="media__duration">00:00:00</span>
+									<img id="media__curent--thumbnail" class="media__image" src="./img/media/avatar.png" />
+								</div>
+							</a>
+							<div class="media__text">
+								<div class="media__text--header">
+									<a class="media__link" href="#" target="_blank">
+										<div id="media__curent--title" class="media__text--title">Unknown</div>
+									</a>
+									<div id="media__curent--description" class="media__text--description"></div>
+								</div>
+								<div id="media__curent--footer" class="media__text--footer">
+									<img id="media__curent--avatar" class="media__avatar" src="./img/media/avatar.png" />
+									<div id="media__curent--username" class="media__text--username">Unknown</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer"></div>
+			</div>
+		</div>
+		<aside class="chat">
+			<div class="chat__resize"></div>
+			<iframe frameborder="0"></iframe>
+		</aside>
+	</body>
+</html>
