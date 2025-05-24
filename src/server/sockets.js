@@ -6,40 +6,33 @@ import { registerAdmin } from '../sync/users/admin';
 import { registerOwner } from '../sync/users/owner';
 import { getUser } from '../database/user';
 import { getRole, formatRole } from '../database/role';
+import Config from '../config.js';
 
 export const io = new Server(server);
 Logger.info('WebSockets server has started!');
 
 io.use((socket, next) => {
+	console.info('test')
 	let user = {
 		logged: false,
 		admin: false,
 		role: 'default',
+		roleId: 0
 	};
 
 	const auth = socket.handshake.auth;
-	if (auth) {
-		const databaseUser = getUser(auth?.id);
-		if (databaseUser && databaseUser.token === auth.token && Date.now() < databaseUser.expire) {
-			delete databaseUser.expire;
-			delete databaseUser.token;
-			user = {
-				...user,
-				...databaseUser,
-			};
-			user.logged = true;
-
-			const role = getRole(user.id);
-			user.role = formatRole(role);
-			user.roleId = role;
-		}
+	if(auth?.adminToken === Config.adminToken) {
+		user.roleId = 2;
+		user.admin = true;
 	}
 	socket.user = user;
 	next();
 });
 
 io.on('connection', (socket) => {
+	console.info('testessa')
 	registerUser(socket);
+
 	console.info('test', socket.user.roleId)
 	if (socket.user.roleId >= 1) registerAdmin(socket);
 	if (socket.user.roleId === 2) registerOwner(socket);

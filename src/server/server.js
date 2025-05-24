@@ -11,8 +11,6 @@ export const app = express();
 export const server = http.createServer(app);
 
 app.use(cookieParser());
-app.use('/account', accountApi);
-app.use('/invite', inviteApi);
 app.use('/', express.static('./frontend'));
 app.all('*', (request, response) => {
     Logger.warn(`Somebody tried to access path: ${request.path} [404]`)
