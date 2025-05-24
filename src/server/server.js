@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import { accountApi } from './api/account';
 import { inviteApi } from './api/invite';
 
-const port = Config.port || 3002;
+const port = Config.port || 8080;
 export const app = express();
 export const server = http.createServer(app);
 
