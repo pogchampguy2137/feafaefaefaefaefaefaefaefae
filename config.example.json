@@ -1,6 +1,5 @@
 {
 	"port": 3002,
-	"frontendPath": "absolute path to frontend directory",
 	"discord": {
 		"clientId": "id",
 		"clientSecret": "secret",

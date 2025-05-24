@@ -40,6 +40,7 @@ io.use((socket, next) => {
 
 io.on('connection', (socket) => {
 	registerUser(socket);
+	console.info('test', socket.user.roleId)
 	if (socket.user.roleId >= 1) registerAdmin(socket);
 	if (socket.user.roleId === 2) registerOwner(socket);
 });

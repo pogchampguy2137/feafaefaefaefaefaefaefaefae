@@ -13,7 +13,7 @@ export const server = http.createServer(app);
 app.use(cookieParser());
 app.use('/account', accountApi);
 app.use('/invite', inviteApi);
-app.use('/', express.static(Config.frontendPath));
+app.use('/', express.static('./frontend'));
 app.all('*', (request, response) => {
     Logger.warn(`Somebody tried to access path: ${request.path} [404]`)
     response.status(404).redirect('/?error=notFound')
