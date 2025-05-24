@@ -12,7 +12,6 @@ export const io = new Server(server);
 Logger.info('WebSockets server has started!');
 
 io.use((socket, next) => {
-	console.info('test')
 	let user = {
 		logged: false,
 		admin: false,
@@ -25,12 +24,12 @@ io.use((socket, next) => {
 		user.roleId = 2;
 		user.admin = true;
 	}
+	console.info(auth, Config.adminToken, user);
 	socket.user = user;
 	next();
 });
 
 io.on('connection', (socket) => {
-	console.info('testessa')
 	registerUser(socket);
 
 	console.info('test', socket.user.roleId)
