@@ -8,19 +8,23 @@ export let account;
 
 window.addEventListener('DOMContentLoaded', () => {
 	initializeBar();
-	const auth = Cookies.get('account');
-	if (!auth) {
-		window.location.href = '/account/login';
+	const auth = {adminToken: Cookies.get('adminToken') }
+	if(!auth) {
+		alert("Missing admin token");
 		return;
 	}
 	socket = io(window.location.origin, {
-		auth: JSON.parse(auth),
+		auth
 	});
+
+	socket.on("connect_error", (err) => {
+		console.log(`connect_error due to ${err.message}`);
+	});
+
 	socket.emit('admin:server:join');
 
 	socket.on('user:login:success', (user) => {
 		account = user;
-		initializeInvite();
 	});
 
 	socket.on('user:client:channel', (channel) => recieveChannel(channel));
@@ -44,7 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	document.querySelector('#channel > button').addEventListener('click', () => {
 		const username = document.querySelector('#channel-username').value;
-		const latency = parseInt(document.querySelector('#channel-latency').value);
+		let latency = parseInt(document.querySelector('#channel-latency').value);
 		if (username.length < 1) return;
 		if (latency < 0) latency = 0;
 
@@ -110,11 +114,3 @@ window.addEventListener('DOMContentLoaded', () => {
 	});
 });
 
-export const initializeInvite = () => {
-	if (account.roleId !== 2) return;
-	document.querySelector('#invite').style.display = 'block';
-	socket.on('owner:client:invite', (url) => prompt('URL:', window.location.origin + url));
-	document.querySelector('#invite-button').addEventListener('click', () => {
-		socket.emit('owner:server:invite', document.querySelector('#invite-role').value);
-	});
-};
