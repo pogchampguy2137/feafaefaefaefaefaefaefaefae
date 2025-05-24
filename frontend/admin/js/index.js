@@ -8,7 +8,7 @@ export let account;
 
 window.addEventListener('DOMContentLoaded', () => {
 	initializeBar();
-	const auth = {adminToken: Cookies.get('adminToken') }
+	const auth = {adminToken: localStorage.get('adminToken') }
 	if(!auth) {
 		alert("Missing admin token");
 		return;
