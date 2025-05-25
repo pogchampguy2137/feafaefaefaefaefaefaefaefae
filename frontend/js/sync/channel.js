@@ -67,8 +67,10 @@ export const handleChannel = (channel) => {
 	// oldUsername = channel.username;
 	// oldPlatform = channel.platform;
 
+	const cameraSource = document.querySelector('#camera__source')
+
 	const cameraURL = `https://player.twitch.tv/?channel=${channel.username}&autoplay=true&muted=true&parent=${PAGE_URL}`;
-	if (camera.src !== cameraURL) camera.src = cameraURL;
+	if (cameraSource.src !== cameraURL) cameraSource.src = cameraURL;
 	const chatURL = `https://www.twitch.tv/embed/${channel.username}/chat?darkpopout&parent=${PAGE_URL}`;
 	if (chat.src !== chatURL) chat.src = chatURL;
 
