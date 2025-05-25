@@ -8,8 +8,9 @@ const getFileName = (url) => {
 };
 
 export const getVideoData = (url) => {
-		return {
-	title: getFileName(url) || 'unknown file',
-		duration: 9999999999999999999999999999999999,
+	return {
+		title: getFileName(url) || 'unknown file',
+		duration: 18000,
 	}
 };
+

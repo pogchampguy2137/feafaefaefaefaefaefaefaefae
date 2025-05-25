@@ -22,7 +22,7 @@ export const getYouTubeData = (url) => {
 	return {
 		id: id,
 		title: 'XD',
-		duration: 9999999999999999999999999999999999,
+		duration: 18000,
 		thumbnail: getYouTubeThumbnail(id),
 	}
 };
