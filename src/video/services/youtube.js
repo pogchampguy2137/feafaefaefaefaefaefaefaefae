@@ -19,24 +19,10 @@ const getYouTubeThumbnail = (id) => `https://img.youtube.com/vi/${id}/mqdefault.
 export const getYouTubeData = (url) => {
 	const id = getYouTubeId(url);
 	if (url === undefined) return { error: true };
-	return new Promise((resolve) => {
-		fetch(
-			'https://yt.lemnoslife.com/noKey/videos?&fields=items(id,snippet(title),contentDetails(duration))&part=contentDetails,snippet&id=' +
-				id
-		)
-			.then((response) => response.json())
-			.then((json) => {
-				const item = json.items[0];
-				resolve({
-					id: item.id,
-					title: item.snippet.title,
-					duration: Duration.fromISO(item.contentDetails.duration).toMillis() / 1000,
-					thumbnail: getYouTubeThumbnail(item.id),
-				});
-			})
-			.catch((error) => {
-				Logger.warn("Couldn't get YouTube data", url, error);
-				resolve({ error: true });
-			});
-	});
+	return {
+		id: id,
+		title: 'XD',
+		duration: 9999999999999999999999999999999999,
+		thumbnail: getYouTubeThumbnail(id),
+	}
 };

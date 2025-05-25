@@ -56,21 +56,21 @@ const chatPlatforms = {
 };
 
 export const handleChannel = (channel) => {
-	if (channel.username !== oldUsername || channel.platform !== oldPlatform) {
-		console.info('[streamplus-camera] Found new camera');
-		camera.querySelector('#camera__source').style.display = 'block';
-		camera.querySelector('#camera__twitch')?.remove();
+	// if (channel.username !== oldUsername || channel.platform !== oldPlatform) {
+	// 	console.info('[streamplus-camera] Found new camera');
+	// 	camera.querySelector('#camera__source').style.display = 'block';
+	// 	camera.querySelector('#camera__twitch')?.remove();
+	//
+	// 	cameraPlatforms[channel.platform](channel.username);
+	// 	chatPlatforms[channel.platform](channel.username);
+	// }
+	// oldUsername = channel.username;
+	// oldPlatform = channel.platform;
 
-		cameraPlatforms[channel.platform](channel.username);
-		chatPlatforms[channel.platform](channel.username);
-	}
-	oldUsername = channel.username;
-	oldPlatform = channel.platform;
-
-	// const cameraURL = `https://player.twitch.tv/?channel=${channel.username}&autoplay=true&muted=true&parent=${PAGE_URL}`;
-	// if (camera.src !== cameraURL) camera.src = cameraURL;
-	// const chatURL = `https://www.twitch.tv/embed/${channel.username}/chat?darkpopout&parent=${PAGE_URL}`;
-	// if (chat.src !== chatURL) chat.src = chatURL;
+	const cameraURL = `https://player.twitch.tv/?channel=${channel.username}&autoplay=true&muted=true&parent=${PAGE_URL}`;
+	if (camera.src !== cameraURL) camera.src = cameraURL;
+	const chatURL = `https://www.twitch.tv/embed/${channel.username}/chat?darkpopout&parent=${PAGE_URL}`;
+	if (chat.src !== chatURL) chat.src = chatURL;
 
 	const player = document.querySelector('.player');
 	if (channel.sync) player.classList.remove('not-syncable-channel');

@@ -8,17 +8,8 @@ const getFileName = (url) => {
 };
 
 export const getVideoData = (url) => {
-	return new Promise((resolve) => {
-		getVideoDurationInSeconds(url)
-			.then((duration) => {
-				resolve({
-					title: getFileName(url) || 'unknown file',
-					duration,
-				});
-			})
-			.catch((error) => {
-				Logger.warn('Error when getting video duration', url, error);
-				resolve({ error: true });
-			});
-	});
+		return {
+	title: getFileName(url) || 'unknown file',
+		duration: 9999999999999999999999999999999999,
+	}
 };
