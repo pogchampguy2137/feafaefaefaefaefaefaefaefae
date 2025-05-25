@@ -1,10 +1,10 @@
 const CHANNEL = {
-	username: 'thevoid',
+	username: 'usermacieg',
 	platform: 'twitch',
 	latency: 0,
 	latencyMode: 'auto',
-	sync: false,
-	autoplay: false,
+	sync: true,
+	autoplay: true,
 	mediaRequest: false,
 };
 
