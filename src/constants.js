@@ -11,7 +11,7 @@ const CHANNEL = {
 const MEDIA = {
 	id: 'big-buck-bunny',
 	sourceList: {
-		default: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+		default: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
 	},
 	defaultSource: 'default',
 	type: 'video',

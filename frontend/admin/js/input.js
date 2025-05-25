@@ -38,9 +38,9 @@ export const getInputMedia = () => {
 	const newMedia = {
 		sourceList,
 		defaultSource,
-		username: account.display_name,
-		userId: account.id,
-		userAvatar: account.avatar_url,
+		username: 'ADMIN',
+		userId: 0,
+		userAvatar: 'https://i.ytimg.com/vi/hY7m5jjJ9mM/hqdefault.jpg',
 		addedAt: Date.now(),
 	};
 	if (document.querySelector('#media > #media-embed').checked) newMedia.type = 'embed';
